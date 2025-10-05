@@ -1,0 +1,268 @@
+{
+  "project": {
+    "name": "Deep Dive: Immersive Ocean Odyssey",
+    "version": "1.0",
+    "description": "NASA Earth observation data transformed into VR experience",
+    "challenge": "Deep Dive: Immersive Data Stories from Ocean to Sky"
+  },
+  
+  "scenes": {
+    "space": {
+      "id": "space",
+      "name": "Earth from Space",
+      "position": [0, 0, -10],
+      "audio": "space-narration",
+      "background": "#000011",
+      "dataLayers": {
+        "sst_anomaly": {
+          "name": "Sea Surface Temperature Anomalies",
+          "source": "MODIS Aqua",
+          "dataset": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis",
+          "description": "Shows temperature deviations from historical averages",
+          "visible": false,
+          "opacity": 0.7,
+          "colorScale": ["#0000ff", "#00ffff", "#ffff00", "#ff0000"]
+        },
+        "ocean_currents": {
+          "name": "Global Ocean Currents",
+          "source": "ECCO2 Model + NASA Satellite Data",
+          "description": "Major ocean circulation patterns",
+          "visible": true,
+          "animationSpeed": 0.5
+        }
+      }
+    },
+    
+    "ocean_surface": {
+      "id": "ocean_surface", 
+      "name": "Ocean Surface Exploration",
+      "position": [0, -5, -15],
+      "audio": "ocean-surface-narration",
+      "background": "#006994",
+      "dataPoints": [
+        {
+          "id": "great_barrier_reef",
+          "name": "Great Barrier Reef",
+          "position": [-2, 0, -8],
+          "dataType": "coral_bleaching",
+          "dataset": "MODIS Coral Bleaching HotSpots",
+          "timeSeries": [
+            {"date": "2020-01-15", "bleaching_level": 0.1, "sst": 28.5},
+            {"date": "2020-02-15", "bleaching_level": 0.3, "sst": 29.8},
+            {"date": "2020-03-15", "bleaching_level": 0.7, "sst": 31.2},
+            {"date": "2020-04-15", "bleaching_level": 0.9, "sst": 30.9}
+          ]
+        },
+        {
+          "id": "gulf_stream",
+          "name": "Gulf Stream Current",
+          "position": [3, 0, -7],
+          "dataType": "ocean_current",
+          "speed": "2.5 m/s",
+          "temperature": "24°C",
+          "description": "Powerful Atlantic ocean current influencing global climate"
+        }
+      ]
+    },
+    
+    "coral_reef": {
+      "id": "coral_reef",
+      "name": "Coral Reef Ecosystem", 
+      "position": [0, -8, -12],
+      "audio": "coral-reef-narration",
+      "environment": "coral_reef",
+      "hotspots": [
+        {
+          "id": "coral_bleaching_hotspot",
+          "position": [-3, 1, 0],
+          "triggerDistance": 2.0,
+          "audio": "coral-bleaching",
+          "title": "Coral Bleaching & Sea Temperature",
+          "description": "When water temperatures rise just 1°C above seasonal averages, corals expel their symbiotic algae, causing bleaching.",
+          "dataSources": ["MODIS SST", "NOAA Coral Reef Watch"],
+          "impact": "70% of world's coral reefs affected by bleaching events"
+        },
+        {
+          "id": "ocean_acidification",
+          "position": [2, 0.5, -1],
+          "triggerDistance": 1.5, 
+          "audio": "ocean-acidification",
+          "title": "Ocean Acidification",
+          "description": "The ocean absorbs 30% of CO2 emissions, making it more acidic and threatening coral skeleton formation.",
+          "dataSources": ["NASA OCO-2", "NOAA PMEL"],
+          "phChange": "-0.1 pH units since industrial revolution"
+        }
+      ]
+    }
+  },
+
+  "nasaDatasets": {
+    "modis_sst": {
+      "name": "MODIS Sea Surface Temperature",
+      "satellite": "Aqua/Terra",
+      "resolution": "1km",
+      "updateFrequency": "daily",
+      "description": "Measures ocean surface temperature using infrared sensors",
+      "url": "https://oceancolor.gsfc.nasa.gov/",
+      "parameters": ["sst", "chlorophyll", "sediment"]
+    },
+    
+    "jason3": {
+      "name": "Jason-3 Sea Level Altimetry", 
+      "satellite": "Jason-3",
+      "resolution": "10km",
+      "updateFrequency": "10 days",
+      "description": "Measures sea surface height to monitor sea level rise",
+      "url": "https://sealevel.jpl.nasa.gov/",
+      "parameters": ["sea_level_anomaly", "significant_wave_height"]
+    },
+    
+    "avhrr": {
+      "name": "AVHRR Ocean Color",
+      "satellite": "NOAA POES",
+      "resolution": "1.1km", 
+      "updateFrequency": "daily",
+      "description": "Advanced Very High Resolution Radiometer for ocean monitoring",
+      "parameters": ["sst", "ocean_color", "aerosols"]
+    },
+    
+    "grace_fo": {
+      "name": "GRACE-FO Ocean Mass",
+      "satellite": "GRACE-FO",
+      "resolution": "300km",
+      "updateFrequency": "monthly", 
+      "description": "Gravity Recovery and Climate Experiment Follow-On measures ocean mass changes",
+      "parameters": ["ocean_mass", "ice_melt_contribution"]
+    }
+  },
+
+  "climateStories": {
+    "sea_level_rise": {
+      "title": "Sea Level Rise Acceleration",
+      "dataSource": "Jason-3 + GRACE-FO",
+      "trend": "3.3 mm/year globally",
+      "timePeriod": "1993-2023",
+      "hotspots": [
+        {"location": "Pacific Islands", "rate": "4.5 mm/year"},
+        {"location": "US East Coast", "rate": "3.8 mm/year"}, 
+        {"location": "Bay of Bengal", "rate": "5.2 mm/year"}
+      ],
+      "impacts": ["coastal flooding", "saltwater intrusion", "habitat loss"]
+    },
+    
+    "coral_bleaching": {
+      "title": "Global Coral Bleaching Events", 
+      "dataSource": "MODIS + NOAA Coral Reef Watch",
+      "majorEvents": [
+        {"year": 1998, "affectedReefs": "16% globally", "trigger": "Strong El Niño"},
+        {"year": 2010, "affectedReefs": "35% globally", "trigger": "Climate Change + El Niño"},
+        {"year": 2016, "affectedReefs": "70% globally", "trigger": "Record Ocean Temperatures"}
+      ],
+      "recoveryTime": "10-15 years for severe bleaching"
+    },
+    
+    "ocean_currents": {
+      "title": "Changing Ocean Circulation",
+      "dataSource": "ECCO2 + Satellite Altimetry", 
+      "keyFindings": [
+        "Atlantic Meridional Overturning Circulation slowing by 15% since 1950",
+        "Polar currents accelerating due to ice melt",
+        "Tropical currents shifting patterns affecting weather"
+      ]
+    }
+  },
+
+  "interactiveElements": {
+    "timeline": {
+      "startYear": 1990,
+      "endYear": 2024,
+      "dataPoints": [
+        {"year": 1992, "event": "TOPEX/Poseidon satellite launch", "significance": "First precise sea level measurements"},
+        {"year": 1998, "event": "First global coral bleaching", "significance": "Mass coral mortality worldwide"},
+        {"year": 2002, "event": "GRACE satellite launch", "significance": "First measurements of ocean mass changes"}, 
+        {"year": 2016, "event": "Record ocean temperatures", "significance": "Worst global coral bleaching event"},
+        {"year": 2023, "event": "Highest sea level recorded", "significance": "101.2 mm above 1993 average"}
+      ]
+    },
+    
+    "dataVisualizations": {
+      "sst_heatmap": {
+        "type": "surface_overlay",
+        "dataRange": [-2, 35],
+        "units": "°C",
+        "colorMap": "thermal",
+        "animation": "monthly_anomalies"
+      },
+      
+      "sea_level": {
+        "type": "height_map", 
+        "dataRange": [-0.5, 0.5],
+        "units": "meters",
+        "colorMap": "topographic",
+        "reference": "1993-2012 average"
+      },
+      
+      "chlorophyll": {
+        "type": "concentration_map",
+        "dataRange": [0.01, 20],
+        "units": "mg/m³", 
+        "colorMap": "algae",
+        "description": "Phytoplankton abundance indicator"
+      }
+    }
+  },
+
+  "educationalContent": {
+    "keyConcepts": [
+      {
+        "concept": "Sea Surface Temperature (SST)",
+        "explanation": "The water temperature close to the ocean's surface. Even small changes (1-2°C) can dramatically impact marine ecosystems.",
+        "importance": "Drives weather patterns, affects coral health, influences hurricane intensity"
+      },
+      {
+        "concept": "Ocean Acidification", 
+        "explanation": "The ongoing decrease in the pH of Earth's oceans, caused by the uptake of carbon dioxide from the atmosphere.",
+        "importance": "Threatens coral reefs, shellfish, and marine food webs"
+      },
+      {
+        "concept": "Sea Level Rise",
+        "explanation": "The increase in the level of the world's oceans due to thermal expansion and melting ice sheets.",
+        "importance": "Threatens coastal communities, ecosystems, and infrastructure"
+      }
+    ],
+    
+    "nasaMissions": [
+      {
+        "name": "SWOT (Surface Water and Ocean Topography)",
+        "launch": "2022",
+        "purpose": "First global survey of Earth's surface water",
+        "contribution": "High-resolution ocean current measurements"
+      },
+      {
+        "name": "PACE (Plankton, Aerosol, Cloud, ocean Ecosystem)",
+        "launch": "2024", 
+        "purpose": "Study ocean ecology and atmospheric particles",
+        "contribution": "Advanced ocean color and phytoplankton monitoring"
+      },
+      {
+        "name": "NISAR (NASA-ISRO SAR Mission)",
+        "launch": "2024",
+        "purpose": "Monitor Earth's changing ecosystems",
+        "contribution": "Sea ice and coastal change monitoring"
+      }
+    ]
+  },
+
+  "metadata": {
+    "lastUpdated": "2024-09-20",
+    "dataSources": [
+      "NASA Ocean Biology Processing Group",
+      "NASA Physical Oceanography Distributed Active Archive Center", 
+      "NOAA Coral Reef Watch",
+      "ESA Climate Change Initiative",
+      "NASA Sea Level Change Portal"
+    ],
+    "license": "NASA Open Data Agreement",
+    "attribution": "Data provided by NASA Earth Observing System"
+  }
+}
